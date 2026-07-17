@@ -32,4 +32,4 @@ Proyecto diseñado para simular el comportamiento real de un sistema de semáfor
 2. Asegúrate de tener instalado el gestor de tarjetas para **ESP32** en el IDE.
 3. Clona este repositorio:
    ```bash
-   git clone [https://github.com/TU_USUARIO/Semaforo-.git](https://github.com/TU_USUARIO/Semaforo-.git)
+   git clone https://github.com/Ironman2201-max/Semaforo-.git
