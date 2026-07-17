@@ -1,7 +1,7 @@
 JOSE ALBERTO RODRIGUEZ
 --
-WILMER CHAMAPURO MOYA--
-FELIX EMILIO AYOVI ORDOÑEZ
+WILMER CHAMAPURO MOYA --
+FELIX EMILIO AYOVI ORDOÑEZ --
 # Semáforo Inteligente con ESP32
 
 Proyecto diseñado para simular el comportamiento real de un sistema de semáforos viales utilizando el microcontrolador ESP32. Ideal para aprender los fundamentos de control de tiempos, manejo de GPIO (pines de entrada/salida) y lógica de programación en sistemas embebidos.
