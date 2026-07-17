@@ -1,0 +1,119 @@
+// ============================================================================
+// PROYECTO: SEMÁFORO DE 4 ESQUINAS COORDINADO (VEHICULAR + PEATONAL)
+// DISPOSITIVO: ESP32
+// ============================================================================
+
+// --- PINES VÍA A (Norte - Sur) ---
+const int CAR_VERDE_A   = 13;
+const int CAR_AMAR_A    = 12;
+const int CAR_ROJO_A    = 14;
+const int PEAT_VERDE_A  = 21;
+const int PEAT_ROJO_A   = 19;
+
+// --- PINES VÍA B (Este - Oeste) ---
+const int CAR_VERDE_B   = 25;
+const int CAR_AMAR_B    = 26;
+const int CAR_ROJO_B    = 27;
+const int PEAT_VERDE_B  = 33;
+const int PEAT_ROJO_B   = 32;
+
+// --- TIEMPOS DE CONFIGURACIÓN (en milisegundos) ---
+const unsigned long TIEMPO_VERDE    = 5000; // 5 segundos de paso
+const unsigned long TIEMPO_AMARILLO = 2000; // 2 segundos de precaución
+const unsigned long TIEMPO_CRUCE    = 1000; // 1 segundo de todo en rojo por seguridad
+
+void setup() {
+  // Configurar todos los pines como salidas
+  pinMode(CAR_VERDE_A, OUTPUT);
+  pinMode(CAR_AMAR_A, OUTPUT);
+  pinMode(CAR_ROJO_A, OUTPUT);
+  pinMode(PEAT_VERDE_A, OUTPUT);
+  pinMode(PEAT_ROJO_A, OUTPUT);
+
+  pinMode(CAR_VERDE_B, OUTPUT);
+  pinMode(CAR_AMAR_B, OUTPUT);
+  pinMode(CAR_ROJO_B, OUTPUT);
+  pinMode(PEAT_VERDE_B, OUTPUT);
+  pinMode(PEAT_ROJO_B, OUTPUT);
+}
+
+void loop() {
+  // --------------------------------------------------------------------------
+  // ESTADO 1: Paso para Vía A (Carros A avanzan, Peatones B cruzan)
+  // --------------------------------------------------------------------------
+  // Vía A abre paso vehicular, peatones esperan
+  digitalWrite(CAR_VERDE_A, HIGH);
+  digitalWrite(CAR_AMAR_A, LOW);
+  digitalWrite(CAR_ROJO_A, LOW);
+  digitalWrite(PEAT_VERDE_A, LOW);
+  digitalWrite(PEAT_ROJO_A, HIGH);
+  
+  // Vía B detenida, peatones de la Vía B pueden cruzar de forma segura
+  digitalWrite(CAR_VERDE_B, LOW);
+  digitalWrite(CAR_AMAR_B, LOW);
+  digitalWrite(CAR_ROJO_B, HIGH);
+  digitalWrite(PEAT_VERDE_B, HIGH);
+  digitalWrite(PEAT_ROJO_B, LOW);
+  
+  delay(TIEMPO_VERDE);
+
+  // --------------------------------------------------------------------------
+  // ESTADO 2: Advertencia en Vía A (Amarillo Vehicular, Peatones B a Rojo)
+  // --------------------------------------------------------------------------
+  digitalWrite(CAR_VERDE_A, LOW);
+  digitalWrite(CAR_AMAR_A, HIGH); // Amarillo para que los carros frenen
+  
+  // Por seguridad, cerramos el paso peatonal de B un momento antes
+  digitalWrite(PEAT_VERDE_B, LOW);
+  digitalWrite(PEAT_ROJO_B, HIGH);
+  
+  delay(TIEMPO_AMARILLO);
+
+  // --------------------------------------------------------------------------
+  // ESTADO 3: Transición de Seguridad (Todo en Rojo)
+  // --------------------------------------------------------------------------
+  digitalWrite(CAR_AMAR_A, LOW);
+  digitalWrite(CAR_ROJO_A, HIGH); // Vía A completamente en rojo
+  // En este punto, TODA la intersección está en rojo por 1 segundo
+  delay(TIEMPO_CRUCE);
+
+  // --------------------------------------------------------------------------
+  // ESTADO 4: Paso para Vía B (Carros B avanzan, Peatones A cruzan)
+  // --------------------------------------------------------------------------
+  // Vía A detenida, sus peatones ahora pueden cruzar
+  digitalWrite(CAR_VERDE_A, LOW);
+  digitalWrite(CAR_AMAR_A, LOW);
+  digitalWrite(CAR_ROJO_A, HIGH);
+  digitalWrite(PEAT_VERDE_A, HIGH);
+  digitalWrite(PEAT_ROJO_A, LOW);
+  
+  // Vía B abre paso vehicular, sus peatones esperan
+  digitalWrite(CAR_VERDE_B, HIGH);
+  digitalWrite(CAR_AMAR_B, LOW);
+  digitalWrite(CAR_ROJO_B, LOW);
+  digitalWrite(PEAT_VERDE_B, LOW);
+  digitalWrite(PEAT_ROJO_B, HIGH);
+  
+  delay(TIEMPO_VERDE);
+
+  // --------------------------------------------------------------------------
+  // ESTADO 5: Advertencia en Vía B (Amarillo Vehicular, Peatones A a Rojo)
+  // --------------------------------------------------------------------------
+  digitalWrite(CAR_VERDE_B, LOW);
+  digitalWrite(CAR_AMAR_B, HIGH);
+  
+  // Cerramos paso peatonal de A
+  digitalWrite(PEAT_VERDE_A, LOW);
+  digitalWrite(PEAT_ROJO_A, HIGH);
+  
+  delay(TIEMPO_AMARILLO);
+
+  // --------------------------------------------------------------------------
+  // ESTADO 6: Transición de Seguridad (Todo en Rojo)
+  // --------------------------------------------------------------------------
+  digitalWrite(CAR_AMAR_B, LOW);
+  digitalWrite(CAR_ROJO_B, HIGH);
+  delay(TIEMPO_CRUCE);
+  
+  // El ciclo se repite regresando al ESTADO 1
+}
