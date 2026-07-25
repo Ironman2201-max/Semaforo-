@@ -33,3 +33,6 @@ Proyecto diseñado para simular el comportamiento real de un sistema de semáfor
 3. Clona este repositorio:
    ```bash
    git clone https://github.com/Ironman2201-max/Semaforo-.git
+
+Análisis:
+El trabajo presenta una buena implementación desde el punto de vista de la programación. El código está organizado, utiliza una secuencia lógica de estados e incorpora correctamente las fases de verde, amarillo y todo rojo, además de coordinar el paso de peatones con el tránsito vehicular. Sin embargo, la evaluación del taller también requería documentar el diseño de la intersección y representar el algoritmo mediante un diagrama de flujo, elementos que no fueron entregados. Asimismo, la propuesta se limita a una intersección básica de dos ejes, sin contemplar giros protegidos u otros movimientos adicionales. En consecuencia, el proyecto demuestra una buena base técnica en programación, pero requiere fortalecer la documentación y el diseño funcional para cumplir completamente con los objetivos del taller.
